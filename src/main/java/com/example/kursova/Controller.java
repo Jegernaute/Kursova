@@ -67,7 +67,7 @@ public class Controller  {
 
         fx_but1.setOnAction(event -> {
             fx_1.setText("Номер");
-            fx_2.setText("Номер телефону");
+            fx_2.setText("Телефон");
             fx_3.setText("Ім'я ");
             fx_4.setText("Фамілія");
             fx_5.setText("Вік");
@@ -159,7 +159,7 @@ public class Controller  {
             TextField jobTextField = new TextField();
 
             // Добавляем текстовые поля на форму
-            grid.add(new Label("Phone_number:"), 0, 0);
+            grid.add(new Label("phone_number:"), 0, 0);
             grid.add( phone_numberTextField, 1, 0);
             grid.add(new Label("First_name:"), 0, 1);
             grid.add(first_nameTextField, 1, 1);
