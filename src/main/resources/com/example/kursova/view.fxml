@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="704.0" prefWidth="700.0" style="-fx-background-color: #FADFAA;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.kursova.Controller">
+   <children>
+      <TableView fx:id="fx_table" layoutX="42.0" layoutY="140.0" prefHeight="526.0" prefWidth="452.0">
+        <columns>
+          <TableColumn fx:id="fx_1" prefWidth="75.0" />
+            <TableColumn fx:id="fx_2" prefWidth="75.0" />
+            <TableColumn fx:id="fx_3" prefWidth="75.0" />
+            <TableColumn fx:id="fx_4" prefWidth="75.0" />
+            <TableColumn fx:id="fx_5" prefWidth="75.0" />
+            <TableColumn fx:id="fx_6" prefWidth="75.0" />
+        </columns>
+      </TableView>
+      <Button fx:id="fx_but1" layoutX="532.0" layoutY="140.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="124.0" style="-fx-background-color: #F98C41;" text="Телефонна книга">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Button>
+      <Button fx:id="fx_but3" layoutX="532.0" layoutY="249.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="124.0" style="-fx-background-color: #F98C41;" text="Адреса " />
+      <Button fx:id="fx_but2" layoutX="532.0" layoutY="194.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="124.0" style="-fx-background-color: #F98C41;" text="Запасний телефон">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Button>
+      <Button fx:id="fx_ad1" layoutX="532.0" layoutY="388.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="124.0" style="-fx-background-color: #F98C41;" text="Додати інфу в тел. книг">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Button>
+      <Button fx:id="fx_ad2" layoutX="532.0" layoutY="443.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="124.0" style="-fx-background-color: #F98C41;" text="Додат інфу. в запас. тел">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Button>
+      <Button fx:id="fx_ad3" layoutX="532.0" layoutY="501.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="124.0" style="-fx-background-color: #F98C41;" text="Додати інфу в Адресу">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Button>
+      <Button fx:id="fx_exit" layoutX="532.0" layoutY="619.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="124.0" style="-fx-background-color: #FF221C;" text="Вихід" />
+   </children>
+</AnchorPane>
