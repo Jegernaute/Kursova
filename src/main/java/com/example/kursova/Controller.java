@@ -1,5 +1,6 @@
 package com.example.kursova;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -7,12 +8,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
 import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class Controller  {
@@ -125,6 +128,78 @@ public class Controller  {
                 fx_4.setCellValueFactory(new PropertyValueFactory<>("user_id"));
                 handleFxOutAdressAction(null);
             });
+
+        //Ввод данных
+        fx_ad1.setOnAction(event -> {
+            // Создаем диалоговое окно для ввода данных фильма
+            Dialog<Phonebook> dialog = new Dialog<>();
+            dialog.setTitle("Додати телефон");
+
+            // Устанавливаем кнопку "Добавить" и кнопку "Отмена"
+            ButtonType addButton = new ButtonType("Додати", ButtonBar.ButtonData.OK_DONE);
+            dialog.getDialogPane().getButtonTypes().addAll(addButton, ButtonType.CANCEL);
+
+            // Создаем форму для ввода данных
+            GridPane grid = new GridPane();
+            grid.setHgap(10);
+            grid.setVgap(10);
+
+            // Создаем текстовые поля для ввода данных
+            TextField user_idTextField = new TextField();
+            TextField phone_numberTextField = new TextField();
+            TextField first_nameTextField = new TextField();
+            TextField last_nameTextField = new TextField();
+            TextField ageTextField = new TextField();
+            TextField jobTextField = new TextField();
+
+            // Добавляем текстовые поля на форму
+            grid.add(new Label("Phone_number:"), 0, 0);
+            grid.add( phone_numberTextField, 1, 0);
+            grid.add(new Label("First_name:"), 0, 1);
+            grid.add(first_nameTextField, 1, 1);
+            grid.add(new Label("Last_name:"), 0, 2);
+            grid.add(last_nameTextField, 1, 2);
+            grid.add(new Label("Age:"), 0, 3);
+            grid.add(ageTextField, 1, 3);
+            grid.add(new Label("Job:"), 0, 4);
+            grid.add(jobTextField, 1, 4);
+
+            // Устанавливаем форму на диалоговое окно
+            dialog.getDialogPane().setContent(grid);
+
+            // Устанавливаем фокус на поле Title при открытии окна
+            Platform.runLater(() -> phone_numberTextField.requestFocus());
+
+            // Обрабатываем результат нажатия кнопки "Добавить"
+            dialog.setResultConverter(buttonType -> {
+                if (buttonType == addButton) {
+                    // Извлекаем данные из текстовых полей
+                    String phone_number = phone_numberTextField.getText();
+                    String first_name = first_nameTextField.getText();
+                    String last_name = last_nameTextField.getText();
+                    int age = Integer.parseInt(ageTextField.getText());
+                    String job = jobTextField.getText();
+                    // Создаем объект Movie с введенными данными
+                    Phonebook phonebook = new Phonebook(0, phone_number, first_name, last_name, age, job);
+
+                    // Добавляем фильм в базу данных
+                    addPhonebookToDatabase(phonebook);
+
+                    // Возвращаем объект Movie в качестве результата
+                    return phonebook;
+                }
+                return null;
+            });
+
+            // Открываем диалоговое окно и ждем результата
+            Optional<Phonebook> result = dialog.showAndWait();
+
+            // Обновляем TableView, если был добавлен новый фильм
+            result.ifPresent(movie -> {
+                fx_table.getItems().add(movie);
+                fx_table.refresh();
+            });
+        });
     }
     private List<Phonebook> fetchPhonebookData() {
         // Соединение с базой данных
@@ -280,5 +355,39 @@ public class Controller  {
         fx_table.refresh();
 
     }
+    private void addPhonebookToDatabase(Phonebook phonebook) {
+        // Подключение к базе данных (предполагается, что у вас уже есть соединение с базой данных)
+        Connection connection = null;
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/notebook", "root", "1234");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        ; // Получение соединения с базой данных
 
+        try {
+            // Создаем PreparedStatement для выполнения SQL-запроса
+            PreparedStatement preparedStatement = connection.prepareStatement(
+                    "INSERT INTO phonebook (user_id, phone_number, first_name, last_name, age, job) VALUES (?, ?, ?, ?, ?, ?)");
+
+            // Устанавливаем параметры запроса на основе данных фильма
+            preparedStatement.setInt(1, phonebook.getUser_id());
+            preparedStatement.setString(2, phonebook.getPhone_number());
+            preparedStatement.setString(3, phonebook.getFirst_name());
+            preparedStatement.setString(4, phonebook.getLast_name());
+            preparedStatement.setInt(5, phonebook.getAge());
+            preparedStatement.setString(6, phonebook.getJob());
+            // Выполняем SQL-запрос
+            preparedStatement.executeUpdate();
+
+            // Закрываем PreparedStatement
+            preparedStatement.close();
+
+            // Закрываем соединение с базой данных
+            connection.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
