@@ -103,6 +103,28 @@ public class Controller  {
             fx_2.setCellValueFactory(new PropertyValueFactory<>("user_id"));
             handleFxOutSecond_phoneAction(null);
         });
+
+
+            fx_but3.setOnAction(event -> {
+                fx_1.setText("Вулиця");
+                fx_2.setText("Номер будинку");
+                fx_3.setText("Квартира");
+                fx_4.setText("Номер");
+                fx_5.setText(" ");
+                fx_6.setText(" ");
+                // Получаем данные о фильмах из базы данных
+                List<Adress> adresses = fetchAdressData();
+                // Создаем ObservableList для хранения данных
+                ObservableList<BD> adressList = FXCollections.observableArrayList(adresses);
+                // Устанавливаем данные в TableView
+                fx_table.setItems(adressList);
+                // Настраиваем соответствие между столбцами таблицы и свойствами модели данных
+                fx_1.setCellValueFactory(new PropertyValueFactory<>("street"));
+                fx_2.setCellValueFactory(new PropertyValueFactory<>("house"));
+                fx_3.setCellValueFactory(new PropertyValueFactory<>("apartment"));
+                fx_4.setCellValueFactory(new PropertyValueFactory<>("user_id"));
+                handleFxOutAdressAction(null);
+            });
     }
     private List<Phonebook> fetchPhonebookData() {
         // Соединение с базой данных
@@ -202,6 +224,58 @@ public class Controller  {
         fx_table.getItems().clear();
         // Добавляем новые данные фильмов в модель данных
         fx_table.getItems().addAll(second_phones);
+        // Обновляем TableView
+        fx_table.refresh();
+
+    }
+
+    private List<Adress> fetchAdressData() {
+        // Соединение с базой данных
+        Connection connection = null;
+        // Список для хранения данных о фильмах
+        List<Adress> adresses = new ArrayList<>();
+        try {
+            // Устанавливаем соединение с базой данных
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/notebook", "root", "1234");
+            // Выполняем SQL-запрос для извлечения данных из таблицы movies
+            String sql = "SELECT * FROM adress";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            // Извлекаем данные из результата запроса и добавляем их в список movies
+            while (resultSet.next()) {
+                String street = resultSet.getString("street");
+                int house = resultSet.getInt("house");
+                int apartment = resultSet.getInt("apartment");
+                int user_id = resultSet.getInt("user_id");
+                Adress adress = new Adress(street, house, apartment, user_id);
+                adresses.add(adress);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // Закрываем соединение с базой данных
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        // Верните список объектов Movie, содержащих данные о фильмах
+        return adresses;
+    }
+
+
+    @FXML
+    private void handleFxOutAdressAction(ActionEvent event) {
+        // Получаем данные фильмов из базы данных
+        List<Adress> adresses = fetchAdressData();
+        // Очищаем текущую модель данных
+        fx_table.getItems().clear();
+        // Добавляем новые данные фильмов в модель данных
+        fx_table.getItems().addAll(adresses);
         // Обновляем TableView
         fx_table.refresh();
 
