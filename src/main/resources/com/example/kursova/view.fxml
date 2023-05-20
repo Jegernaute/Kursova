@@ -44,6 +44,6 @@
             <Font size="10.0" />
          </font>
       </Button>
-      <Button fx:id="fx_exit" layoutX="532.0" layoutY="619.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="124.0" style="-fx-background-color: #FF221C;" text="Вихід" />
+      <Button fx:id="fx_del" layoutX="532.0" layoutY="619.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="124.0" style="-fx-background-color: #FF221C;" text="Видалити" />
    </children>
 </AnchorPane>
