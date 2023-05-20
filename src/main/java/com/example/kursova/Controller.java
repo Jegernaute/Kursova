@@ -222,13 +222,13 @@ public class Controller  {
             grid.setVgap(10);
 
             // Создаем текстовые поля для ввода данных
-            TextField streetTextField = new TextField();
+            TextField phoneTextField = new TextField();
             TextField user_idTextField = new TextField();
 
 
             // Добавляем текстовые поля на форму
-            grid.add(new Label("Street:"), 0, 0);
-            grid.add( streetTextField, 1, 0);
+            grid.add(new Label("Phone:"), 0, 0);
+            grid.add( phoneTextField, 1, 0);
             grid.add(new Label("User_id:"), 0, 1);
             grid.add(user_idTextField, 1, 1);
 
@@ -236,17 +236,17 @@ public class Controller  {
             dialog.getDialogPane().setContent(grid);
 
             // Устанавливаем фокус на поле Title при открытии окна
-            Platform.runLater(() -> streetTextField.requestFocus());
+            Platform.runLater(() -> phoneTextField.requestFocus());
 
             // Обрабатываем результат нажатия кнопки "Добавить"
             dialog.setResultConverter(buttonType -> {
                 if (buttonType == addButton) {
                     // Извлекаем данные из текстовых полей
-                    String street = streetTextField.getText();
+                    String phone = phoneTextField.getText();
                     int user_id = Integer.parseInt(user_idTextField.getText());
 
                     // Создаем объект Movie с введенными данными
-                    Second_phone second_phone = new Second_phone(street, user_id);
+                    Second_phone second_phone = new Second_phone(phone, user_id);
 
                     // Добавляем фильм в базу данных
                     addSecond_phoneToDatabase(second_phone);
@@ -263,6 +263,73 @@ public class Controller  {
             // Обновляем TableView, если был добавлен новый фильм
             result.ifPresent(second_phone -> {
                 fx_table.getItems().add(second_phone);
+                fx_table.refresh();
+            });
+        });
+
+        fx_ad3.setOnAction(event -> {
+            // Создаем диалоговое окно для ввода данных фильма
+            Dialog<Adress> dialog = new Dialog<>();
+            dialog.setTitle("Додати адрес");
+
+            // Устанавливаем кнопку "Добавить" и кнопку "Отмена"
+            ButtonType addButton = new ButtonType("Додати", ButtonBar.ButtonData.OK_DONE);
+            dialog.getDialogPane().getButtonTypes().addAll(addButton, ButtonType.CANCEL);
+
+            // Создаем форму для ввода данных
+            GridPane grid = new GridPane();
+            grid.setHgap(10);
+            grid.setVgap(10);
+
+            // Создаем текстовые поля для ввода данных
+            TextField streetTextField = new TextField();
+            TextField houseTextField = new TextField();
+            TextField apartmentTextField = new TextField();
+            TextField user_idTextField = new TextField();
+
+            // Добавляем текстовые поля на форму
+            grid.add(new Label("Street:"), 0, 0);
+            grid.add( streetTextField, 1, 0);
+            grid.add(new Label("House:"), 0, 1);
+            grid.add(houseTextField, 1, 1);
+            grid.add(new Label("Apartment:"), 0, 2);
+            grid.add(apartmentTextField, 1, 2);
+            grid.add(new Label("User_id:"), 0, 3);
+            grid.add(user_idTextField, 1, 3);
+
+            // Устанавливаем форму на диалоговое окно
+            dialog.getDialogPane().setContent(grid);
+
+            // Устанавливаем фокус на поле Title при открытии окна
+            Platform.runLater(() -> streetTextField.requestFocus());
+
+            // Обрабатываем результат нажатия кнопки "Добавить"
+            dialog.setResultConverter(buttonType -> {
+                if (buttonType == addButton) {
+                    // Извлекаем данные из текстовых полей
+                    String street = streetTextField.getText();
+                    int house = Integer.parseInt(houseTextField.getText());
+                    int apartment = Integer.parseInt(apartmentTextField.getText());
+                    int user_id = Integer.parseInt(user_idTextField.getText());
+
+                    // Создаем объект Movie с введенными данными
+                    Adress adress = new Adress(street, house, apartment, user_id);
+
+                    // Добавляем фильм в базу данных
+                    addAdressToDatabase(adress);
+
+                    // Возвращаем объект Movie в качестве результата
+                    return adress;
+                }
+                return null;
+            });
+
+            // Открываем диалоговое окно и ждем результата
+            Optional<Adress> result = dialog.showAndWait();
+
+            // Обновляем TableView, если был добавлен новый фильм
+            result.ifPresent(adress -> {
+                fx_table.getItems().add(adress);
                 fx_table.refresh();
             });
         });
@@ -477,6 +544,41 @@ public class Controller  {
             preparedStatement.setString(1, second_phone.getPhone());
             preparedStatement.setInt(2, second_phone.getUser_id());
 
+            // Выполняем SQL-запрос
+            preparedStatement.executeUpdate();
+
+            // Закрываем PreparedStatement
+            preparedStatement.close();
+
+            // Закрываем соединение с базой данных
+            connection.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void addAdressToDatabase(Adress adress) {
+        // Подключение к базе данных (предполагается, что у вас уже есть соединение с базой данных)
+        Connection connection = null;
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/notebook", "root", "1234");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        ; // Получение соединения с базой данных
+
+        try {
+            // Создаем PreparedStatement для выполнения SQL-запроса
+            PreparedStatement preparedStatement = connection.prepareStatement(
+                    "INSERT INTO adress (street, house, apartment,user_id) VALUES (?, ?, ?, ?)");
+
+            // Устанавливаем параметры запроса на основе данных фильма
+
+            preparedStatement.setString(1, adress.getStreet());
+            preparedStatement.setInt(2, adress.getHouse());
+            preparedStatement.setInt(3, adress.getApartment());
+            preparedStatement.setInt(4, adress.getUser_id());
             // Выполняем SQL-запрос
             preparedStatement.executeUpdate();
 
