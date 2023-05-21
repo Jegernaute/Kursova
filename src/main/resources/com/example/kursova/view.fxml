@@ -48,7 +48,7 @@
          </font>
       </Button>
       <Button fx:id="fx_del" layoutX="633.0" layoutY="600.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="124.0" style="-fx-background-color: #FF221C;" text="Видалити" />
-      <Label layoutX="263.0" layoutY="14.0" text="Записна книга">
+      <Label layoutX="253.0" layoutY="6.0" text="Телефонна книга">
          <font>
             <Font name="Monospaced Regular" size="36.0" />
          </font>
@@ -66,8 +66,8 @@
       <Separator layoutX="765.0" layoutY="405.0" orientation="VERTICAL" prefHeight="255.0" prefWidth="6.0" />
       <Separator layoutX="620.0" layoutY="656.0" prefHeight="10.0" prefWidth="147.0" />
       <Separator layoutX="620.0" layoutY="162.0" orientation="VERTICAL" prefHeight="186.0" prefWidth="6.0" />
-      <Line endX="93.80001831054688" endY="0.20000457763671875" layoutX="321.0" layoutY="50.0" startX="-58.000030517578125" startY="0.20000457763671875" />
-      <Line endX="52.600006103515625" endY="0.20000457763671875" layoutX="490.0" layoutY="50.0" startX="-52.399993896484375" startY="0.20000457763671875" />
+      <Line endX="127.80001831054688" endY="-0.7999954223632812" layoutX="321.0" layoutY="50.0" startX="-68.00003051757812" startY="-0.7999954223632812" />
+      <Line endX="52.600006103515625" endY="0.20000457763671875" layoutX="524.0" layoutY="49.0" startX="-52.399993896484375" startY="0.20000457763671875" />
       <Label layoutX="611.0" layoutY="139.0" text="Таблиці бази даних ">
          <font>
             <Font name="Monospaced Regular" size="14.0" />

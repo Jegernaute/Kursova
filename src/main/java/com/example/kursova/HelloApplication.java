@@ -15,10 +15,6 @@ public class HelloApplication extends Application {
         stage.setTitle("Телефонна книга");
         stage.setScene(scene);
         stage.show();
-
-
-
-
     }
 
     public static void main(String[] args) {
