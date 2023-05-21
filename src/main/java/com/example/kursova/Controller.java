@@ -66,7 +66,7 @@ public class Controller  {
     public void initialize( ) {
 
         fx_but1.setOnAction(event -> {
-            fx_1.setText("Номер");
+            fx_1.setText("user_id");
             fx_2.setText("Телефон");
             fx_3.setText("Ім'я ");
             fx_4.setText("Фамілія");
@@ -90,7 +90,7 @@ public class Controller  {
 
         fx_but2.setOnAction(event -> {
             fx_1.setText("Другий телефон");
-            fx_2.setText("Номер");
+            fx_2.setText("user_id");
             fx_3.setText(" ");
             fx_4.setText(" ");
             fx_5.setText(" ");
@@ -116,7 +116,7 @@ public class Controller  {
                 fx_1.setText("Вулиця");
                 fx_2.setText("Номер будинку");
                 fx_3.setText("Квартира");
-                fx_4.setText("Номер");
+                fx_4.setText("user_id");
                 fx_5.setText(" ");
                 fx_6.setText(" ");
                 // Получаем данные о фильмах из базы данных
