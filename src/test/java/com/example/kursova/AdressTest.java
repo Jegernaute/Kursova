@@ -14,7 +14,7 @@ class AdressTest {
         int expectedApartment = 456;
         int expectedUserId = 789;
 
-        // Act
+        //  Act
         Adress adress = new Adress(expectedStreet, expectedHouse, expectedApartment, expectedUserId);
 
         // Assert
