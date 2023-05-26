@@ -450,7 +450,6 @@ public class Controller  {
         fx_table.getItems().addAll(phonebooks);
         // Обновляем TableView
         fx_table.refresh();
-
     }
     private List<Second_phone> fetchSecond_phoneData() {
         // Соединение с базой данных
